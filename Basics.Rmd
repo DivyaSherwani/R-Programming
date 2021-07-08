@@ -1,0 +1,169 @@
+---
+title: "R Basics"
+author: "Divya Sherwani"
+date: "June 28, 2021"
+output: word_document
+---
+
+```{r}
+# Defining a variable
+x <- 5
+x
+```
+
+```{r}
+# Taking name input from user
+y <- readline(prompt = "Enter your name:")
+y
+```
+
+```{r}
+# Taking age input from user
+age = as.double(readline(prompt = "Enter age:"))
+```
+
+```{r}
+# To print a sequence of numbers
+1:15
+```
+
+```{r}
+# Concatenate
+a = c(1:15,100)
+a
+```
+
+```{r}
+# Paste
+paste("xyz",c(2,5,7,"test",4:5))
+```
+
+```{r}
+# Sequence
+b = seq(1, 20, 2)
+```
+
+
+Functions
+
+```{r}
+# Sum Function
+num1 = 5
+num2 = 7
+add = function(num1, num2){
+  print(num1+num2)
+}
+add(num1, num2)
+```
+
+For loop
+
+```{r}
+# Factorial function
+fact = function(n){
+  for (i in n){
+    if (n ==0 | n==1){
+    factorial =  1
+    print(factorial)
+  }else{
+    factorial = factorial(n-1) * n
+    print(factorial)
+  }
+  }
+}
+n = 4
+fact(n)
+```
+
+
+Write a R program to take input from the user (name and age) and display the values.
+
+```{r}
+name = readline(prompt="Enter your name:")
+age = as.double(readline(prompt = "Enter your age:"))
+print(name)
+print(age)
+```
+
+
+Write a R program to create a sequence of numbers from 20 to 50 and find the mean of numbers from 20 to 60 and sum of numbers from 51 to 91. 
+
+```{r}
+sequence = seq(20, 50)
+mean(20:60)
+sum(51:91)
+```
+
+Write a R program to create a vector which contains 10 random integer values between -50 and +50.
+
+```{r}
+sample(-50:50, 10, replace = TRUE)
+```
+
+Write a R program to get the first 10 Fibonacci numbers.
+
+
+```{r}
+sequence = numeric()
+fibonacci = function(n){
+  for (i in 1:n){
+    if (i==1 | i==2){sequence = append(sequence,1)}
+    else{sequence = append(sequence, sequence[i-1] + sequence[i-2])}
+  }
+  print(sequence)
+}
+fibonacci(10)
+```
+
+Write a R program to print the numbers from 1 to 100 and print "Fizz" for multiples of 3, print "Buzz" for multiples of 5, and print "FizzBuzz" for multiples of both. 
+
+```{r}
+print(1:100)
+for (i in 1:100){
+  if (i%%3 ==0 & i%%5==0){
+    print("FizzBuzz")
+  } else if (i%%3==0 & i%%5!=0){
+    print("Fizz")
+  } else {print("Buzz")}
+}
+```
+
+Write a R program to extract first 10 english letter in lower case and last 10 letters in upper case and extract letters between 22nd to 24th letters in upper case.
+
+```{r}
+letters[1:10]
+LETTERS[16:26]
+LETTERS[22:24]
+```
+
+
+Write a R program to find the factors of a given number.
+
+```{r}
+n = 10
+factors = numeric()
+factor = function(n){
+  for (i in 1:n){
+  if (i==0){
+    print("No factors")
+  } else if (n%%i == 0){
+    factors = append(factors,i)
+  }
+  }
+  print(factors)
+}
+factor(10)
+```
+
+
+Write a R program to find the maximum and the minimum value of a given vector. 
+
+```{r}
+a = c(1:10, 200)
+a
+paste("Minimum value is", min(a))
+paste("Maximum value is", max(a))
+```
+
+
+
