@@ -1,0 +1,88 @@
+---
+title: "Dataframes"
+author: "Divya Sherwani"
+date: "July 1, 2021"
+output: word_document
+---
+
+```{r}
+data = read.csv("P2-Demographic-Data.csv")
+View(data)
+```
+
+```{r}
+nrow(data)
+ncol(data)
+```
+
+```{r}
+summary(data)
+```
+
+```{r}
+str(data)
+```
+
+```{r}
+# Indexing data frames
+#Indexing rows
+data[3,3]
+data[3,"Birth.rate"]
+
+# Indexing columns
+data$Internet.users[2]
+data[, "Internet.users"]
+
+data[c(1,2),]
+data[[2]]
+
+#when we index column, we get a vector else we get dataframe
+# drop=F returns output in the form of dataframe
+data[,2,drop=F]
+
+# operations
+data$Birth.rate+data$Internet.users
+
+data$test = 1:5 #number provided here should be a factor of the total number of rows
+data[1:6,"test"]
+```
+
+```{r}
+filter = data$Internet.users < 2
+data[data$Internet.users < 2, ]
+```
+
+```{r}
+data[data$Birth.rate > 40 & data$Internet.users<2,]
+```
+
+```{r}
+countries = data$Country.Name
+codes = data$Country.Code
+
+df = data.frame("Country" = countries, "Code" = codes)
+head(df,4)
+```
+
+```{r}
+merge(data, df, by.x = "Country.Code", by.y = "Code")
+```
+
+```{r}
+library(ggplot2)
+qplot(data = data, x = Internet.users)
+
+
+```
+```{r}
+qplot(data= data, x= data$Income.Group, y = data$Birth.rate, size = I(3), color = I("red"))
+qplot(data= data, x= data$Income.Group, y = data$Birth.rate, geom = "boxplot")
+```
+```{r}
+qplot(data = data, Birth.rate, Internet.users, col=Income.Group)
+```
+
+```{r}
+
+```
+
