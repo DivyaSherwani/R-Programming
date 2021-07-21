@@ -1,0 +1,198 @@
+---
+title: "Advanced plotting"
+author: "Divya Sherwani"
+date: "July 8, 2021"
+output:
+  pdf_document: default
+  word_document: default
+---
+
+```{r}
+data1 = read.csv("P2-Demographic-Data.csv")
+str(data1)
+```
+
+```{r}
+library(ggplot2)
+# Bar graph - Numerical variable (discrete)
+qplot(data = data1, x = Internet.users, fill=I("turquoise"), main = "Internet users") 
+```
+
+
+```{r}
+# Numerical and categorical variable
+qplot(data= data1, x= Income.Group, y = Birth.rate, size = I(3), color = I("red"))
+
+```
+
+There are outliers in the data. As the income increases, the birth rate decreases. The mean birth rate is highest for the low income group and lowest for the high income group.
+
+```{r}
+# Boxplot
+qplot(data= data1, x= Income.Group, y = Birth.rate, geom = "boxplot")
+```
+
+In the high income group, the distribution is positively skewed, i.e., in majority of the cases, the birth rate is below the average birth rate of the group. This trend can be noticed in the low income group as well.
+
+```{r}
+# Scatter plot
+qplot(data = data1, Birth.rate, Internet.users, col=Income.Group)
+```
+
+Most of the high income countries have low birth rate and have large number of internet users. In general, there is a positive relationship between income group and number of internet users whereas there is a negative relationship between birth rate and income level.
+
+```{r}
+# Diamonds dataset
+str(diamonds)
+```
+
+
+```{r}
+ggplot(diamonds, aes(x=color, fill = color)) +geom_bar() + labs(title = "Color Distribution of Diamonds", x = "Color", y = "No of diamonds")
+```
+
+
+```{r}
+library(dplyr)
+plotdata = data.frame(diamonds %>% count(color))
+colnames(plotdata) = c("Colour", "n")
+plotdata
+```
+
+
+```{r}
+ggplot(plotdata, aes(x= Colour, y = n, fill = Colour)) + geom_bar(stat="identity") + labs(title = "Colour distribution", y = "Number of diamonds") + geom_text(aes(label = n, vjust = -0.5, size = I(3))) 
+```
+
+Most of the diamonds belong to color category G.
+
+```{r}
+gg = ggplot(diamonds, aes(x=carat, y=price)) + geom_point(aes(color=cut)) + geom_smooth() 
+gg
+```
+
+There is a near positive relationship between carat and price. Most of the diamonds are ideal cut but for diamonds which have high carat and high price, diamonds are of fair category.
+
+
+```{r}
+gg + labs(title = "Carat vs Price") + theme(plot.title=element_text(size=10, face="bold"), 
+                  axis.text.x=element_text(size=10), 
+                  axis.text.y=element_text(size=10),
+                  axis.title.x=element_text(size=10),
+                  axis.title.y=element_text(size=10)) + 
+  scale_color_discrete(name="Cut of diamonds")
+```
+
+
+```{r}
+gg + facet_wrap(~ cut) 
+```
+
+Most of the diamonds belog to the low price category, i.e, low carat. 
+
+```{r}
+plot1 <- ggplot(mtcars, aes(x=cyl)) + geom_bar(fill = "maroon") + labs(title="Frequency bar chart")  
+print(plot1)
+```
+
+
+```{r}
+ggplot(data = diamonds, aes(x = color, y = carat, fill = color)) + geom_bar(stat = "identity")
+```
+
+```{r}
+# Reading data
+data = read.csv("P2-Movie-Ratings.csv.txt")
+head(data)
+```
+
+```{r}
+# Changing column names
+colnames(data) = c("Film", "Genre", "CriticRatings", "AudienceRatings", "Budget", "Year")
+colnames(data)
+```
+
+```{r}
+str(data)
+```
+
+```{r}
+plot = ggplot(data=data, aes(x = CriticRatings, y = AudienceRatings, size = Budget, col = Genre))
+plot
+```
+
+```{r}
+# Using plot object of ggplot
+plot + geom_point() 
+```
+
+```{r}
+# Overriding aes
+plot + geom_point()
+# To set the color for all points, set it outside aes
+plot + geom_point(aes(x = Budget), col = "red")
+```
+
+```{r}
+plot + geom_line(size = 2)
+```
+
+```{r}
+#Histogram
+hists = ggplot(data = data, aes(x=Budget))
+hists + geom_histogram(binwidth = 10)
+hists + geom_histogram(binwidth = 10, aes(fill = Genre))
+hists + geom_histogram(binwidth = 10, aes(fill = Genre), col = "black")
+```
+
+```{r}
+# Density plot
+dense = hists + geom_density(aes(fill = Genre))
+dense
+```
+
+```{r}
+# Density plot
+dense = hists + geom_density(aes(fill = Genre), position = "Stack")
+dense
+```
+
+```{r}
+# Box plot
+stat = ggplot(data = data, aes(x=Genre, y = AudienceRatings, col=Genre))
+stat+ geom_boxplot() +geom_point()
+```
+
+```{r}
+# alpha determines opacity
+stat+ geom_boxplot() + geom_jitter() + geom_boxplot(size = 1, alpha = 0.5) 
+```
+
+```{r}
+#using facets
+plot3 <- ggplot(data=data, aes(x=Budget))
+
+plot3 + geom_histogram(binwidth = 10, aes(fill=Genre), color="Black")
+```
+
+
+```{r}
+plot3 + geom_histogram(binwidth = 10, aes(fill=Genre), color="Black") + 
+  facet_grid(Genre~., scales = "free")
+```
+
+```{r}
+#scatter plot
+plot4 <- ggplot(data = data, aes(x=CriticRatings, y=AudienceRatings, color=Genre))
+
+plot4 + geom_point(size=3) + facet_grid(Genre~.)
+```
+
+```{r}
+plot4 + geom_point(size=3) + facet_grid(.~Year)
+```
+
+```{r}
+plot4 + geom_point(aes(size=Budget)) + facet_grid(Genre~Year)
+```
+
